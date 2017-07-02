@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="formUsuarios">
+            <p:growl life="2000" id="growl1"/>
+            <p:panel header="Usuarios">
+                <p:panelGrid columns="2">
+                    <p:outputLabel for="usuario" value="Usuario"/>
+                    <p:inputText id="usuario" value="#{usuarioMb.usuario.usuario}"/>
+                    <p:outputLabel for="password" value="Password"/>
+                    <p:inputText id="password" value="#{usuarioMb.usuario.password}"/>
+                    <p:outputLabel for="nombre" value="Nombre"/>
+                    <p:inputText id="nombre" value="#{usuarioMb.usuario.nombre}"/>
+                </p:panelGrid>
+                <p:commandButton value="Guardar Usuario" action="#{usuarioMb.guardarUsuario}" update="formUsuarios:growl1, :formDtUsuarios:dataTableUsuarios"/>
+                <p:commandButton value="limpiar" action="#{usuarioMb.limpiar}" update="formUsuarios"/>
+                <p:commandButton value="Actualizar Usuario" action="#{usuarioMb.actualizarUsuario}" update="formUsuarios:growl1, :formDtUsuarios:dataTableUsuarios"/>
+            </p:panel>
+        </h:form> 
+        
+        <h:form id="formDtUsuarios">
+            <p:outputPanel id="panelToUpdateUsuarios">
+                <p:dataTable id="dataTableUsuarios" widgetVar="dataTableUsuarios" value="#{usuarioMb.usuarioList}" var="usr" paginator="true" rows="5">
+                    <p:column headerText="id Usuario">
+                        <h:outputText value="#{usr.idusuario}"/>
+                    </p:column>
+                    <p:column headerText="usuario">
+                        <h:outputText value="#{usr.usuario}"/>
+                    </p:column>
+                    <p:column headerText="password">
+                        <h:outputText value="#{usr.password}"/>
+                    </p:column>
+                    <p:column headerText="nombre">
+                        <h:outputText value="#{usr.nombre}"/>
+                    </p:column>
+                    <p:column headerText="acciones">
+                        <p:commandButton value="Eliminar" action="#{usuarioMb.eliminarUsuario(usr)}" update="formUsuarios:growl1, :formDtUsuarios:dataTableUsuarios"/>
+                        <p:commandButton value="Actualizar" action="#{usuarioMb.seleccionarUsuario(usr)}" update="formUsuarios"/>
+                    </p:column>
+
+                </p:dataTable>            
+            </p:outputPanel>
+        </h:form>        
+    </h:body>
+</html>
+
